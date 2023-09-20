@@ -1,6 +1,6 @@
 // Graph/index.jsx
 
-import React, { useRef,  useContext, useEffect } from "react";
+import React, { useRef,  useContext, useEffect, useCallback } from "react";
 import ReactFlow, { addEdge, Controls, Background } from "reactflow";
 import RelationNode from "../components/Node/RelationNode";
 import LinkEdge from "../components/Edge/LinkEdge";
@@ -56,12 +56,12 @@ export default function FlowGraph(props) {
     });
   };
 
-  const setElements = (els) => {
+  const setElements = useCallback((els) => {
     dispatch({
       type: Actions.SET_ELEMENTS,
       payload: els,
     });
-  };
+  },[dispatch]);
 
   // 自定义节点
   const nodeTypes = {
@@ -153,21 +153,21 @@ export default function FlowGraph(props) {
       });
     });
     setElements(defaultElements);
-  }, []);
+  }, [dispatch, setElements]);
   
 
   return (
     <div className="graph" ref={graphWrapper}>
       <ReactFlow
         elements={elements}
-        // nodeTypes={nodeTypes}
-        // edgeTypes={edgeTypes}
-        // onConnect={onConnect}
-        // onLoad={onLoad}
-        // onDrop={onDrop}
-        // onDragOver={onDragOver}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        onConnect={onConnect}
+        onLoad={onLoad}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
       >
-        <Controls />
+        <Controls position="bottom-right"/>
         <Background />
       </ReactFlow>
     </div>

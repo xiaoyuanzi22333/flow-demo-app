@@ -90,7 +90,7 @@ export default function LinkEdge({
           content={<PopoverCard {...model} />}
           trigger="click"
           overlayClassName="linkedge-overlay"
-          onVisibleChange={handleVisibleChange}
+          onOpenChange={handleVisibleChange}
         >
           <EdgeButton size="small" label={currentEdge?.label}></EdgeButton>
         </Popover>

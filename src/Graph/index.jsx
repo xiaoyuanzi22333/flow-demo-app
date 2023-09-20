@@ -43,6 +43,12 @@ const initialNodes = [
     data: { label: "relation node", name: "input tensor" },
   },
   {
+    id: "020",
+    position: { x: 800, y: 65 },
+    type: "relation",
+    data: { label: "relation node", name: "input tensor" },
+  },
+  {
     id: "999",
     position: { x: 576, y: 118 },
     type: "relation",
@@ -90,6 +96,8 @@ function getHash(len) {
 export default function FlowGraph(props) {
   const { state, dispatch } = useContext(FlowContext);
   const { elements, reactFlowInstance } = state;
+
+  console.log({state});
   // 画布的 DOM 容器，用于计算节点坐标
   const graphWrapper = useRef(null);
 
@@ -114,6 +122,7 @@ export default function FlowGraph(props) {
   // 连线
   const onConnect = (params) =>
   {
+    console.log('connecting');
     const id = `reactflow__edge-${params.source}${params.sourceHandle}-${params.target}${params.targetHandle}`;
     dispatch({
       type: Actions.SET_FLOW_NODE,
@@ -205,6 +214,7 @@ export default function FlowGraph(props) {
         onLoad={onLoad}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        // draggable
       >
         <Controls position="bottom-right"/>
         <Background />

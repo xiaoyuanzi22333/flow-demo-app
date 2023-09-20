@@ -77,6 +77,7 @@ const allowedNodes = [
 export default function FlowSider() {
   // 获取画布上的节点
   const nodes = useStore((store) => store.nodes);
+  console.log(nodes);
   const onDragStart = (evt, nodeType, name) => {
     // 记录被拖拽的节点类型
     evt.dataTransfer.setData('application/reactflow', nodeType + ',' + name);

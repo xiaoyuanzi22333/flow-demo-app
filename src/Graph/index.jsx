@@ -5,18 +5,20 @@ import ReactFlow, { addEdge, Controls, Background } from "reactflow";
 import RelationNode from "../components/Node/RelationNode";
 import LinkEdge from "../components/Edge/LinkEdge";
 import { FlowContext, Actions } from "../context";
+import 'reactflow/dist/style.css';
+
 
 
 const defaultElements = [
   {
     id: "000",
-    position: { x: 283, y: 63.15625 },
+    position: { x: 283, y: 65 },
     type: "relation",
     data: { label: "relation node", name: "input tensor" },
   },
   {
     id: "999",
-    position: { x: 576.5871518688318, y: 118.88856445984582 },
+    position: { x: 576, y: 118 },
     type: "relation",
     data: { label: "relation node", name: "output tensor" },
   },
@@ -31,6 +33,48 @@ const defaultElements = [
     arrowHeadType: 'arrowclosed'
   },
 ];
+
+
+const initialNodes = [
+  {
+    id: "000",
+    position: { x: 283, y: 65 },
+    type: "relation",
+    data: { label: "relation node", name: "input tensor" },
+  },
+  {
+    id: "999",
+    position: { x: 576, y: 118 },
+    type: "relation",
+    data: { label: "relation node", name: "output tensor" },
+  }
+];
+
+const initialEdges = [
+  {
+    id: "reactflow__edge-rmGjd9wVnull-FkJ6fZXDnull",
+    source: "000",
+    sourceHandle: null,
+    target: "999",
+    targetHandle: null,
+    type: "link",
+    label: "transfer",
+    arrowHeadType: 'arrowclosed'
+  }
+];
+
+
+
+// 自定义节点
+const nodeTypes = {
+  relation: RelationNode,
+};
+
+// 自定义连线
+const edgeTypes = {
+  link: LinkEdge,
+};
+
 
 function getHash(len) {
   let length = Number(len) || 8;
@@ -63,15 +107,7 @@ export default function FlowGraph(props) {
     });
   },[dispatch]);
 
-  // 自定义节点
-  const nodeTypes = {
-    relation: RelationNode,
-  };
-
-  // 自定义连线
-  const edgeTypes = {
-    link: LinkEdge,
-  };
+  
 
   // 画布加载完毕，保存当前画布实例
   const onLoad = (instance) => setReactFlowInstance(instance);
@@ -155,11 +191,14 @@ export default function FlowGraph(props) {
     setElements(defaultElements);
   }, [dispatch, setElements]);
   
+  
 
   return (
     <div className="graph" ref={graphWrapper}>
       <ReactFlow
-        elements={elements}
+        // elements={elements}
+        nodes={initialNodes}
+        edges={initialEdges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onConnect={onConnect}
